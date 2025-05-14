@@ -1,13 +1,13 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/am3xLbu5)
-# PROJECT NAME HERE (CHANGE THIS!!!!!)
+### SHA1
  
-### GROUP NAME HERE (CHANGE THIS!!!!!)
+### Group1
 
-Group Members Here (CHANGE THIS!!!!!)
+David Chen
        
 ### Project Description:
 
-Explain what is this project. (CHANGE THIS!!!!!)
+This project aims to explain how the SHA1 algorithm works and elaborate on its vulnerabilities(specifically the birthday attack) and why it isn't considered secure anymore.
   
 ### Instructions:
 
