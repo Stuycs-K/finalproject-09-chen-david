@@ -11,7 +11,7 @@ int main(){
 
 
 char* encode(char* input){
-	char* buffer = malloc(  ((len(input) / 64) + 1) * 64);
+	char* buffer = malloc(  ((len(input) * 8 / 512) + 1) * 512);
 	char* H0 = "67452301";
 	char* H1 = "EFCDAB89";
 	char* H2 = "98BADCFE";
@@ -20,16 +20,29 @@ char* encode(char* input){
 	int power = 0;
 
 	//initialization
-
-	for(int i = 0; i < len(buffer); i ++){
-		if(i < len(input)) buffer[i] = input[i];
-		else if(i == len(input)) buffer[i] = 1;
+	int increment_i = 8;
+	for(int i = 0; i < len(buffer); i += increment_i){
+		if(i < len(input) * 8){
+			for(int j = 0; j < 8; j++){
+				//insert each bit
+				
+				buffer[i + j] = 0;
+				if((input[i]%math.pow(2, 8 - j) == math.pow(2, 8-j)){
+					buffer[i + j] = 1;	
+				}
+			}
+		}
+		else if(i == len(input)){
+			 buffer[i] = 1;
+			 increment_i = 1;
+		}
 		else{
+			increment_i = 1;
 			if(i < len(buffer) - 64) buffer[i] = 0;
 			else{
 				buffer[i] = 0;
-				if( (len(input)&pow(2, power)) == pow(2, power)){
-					buffer[i] = 1;	
+				if( (len(input)&math.pow(2, 8 - power)) == math.pow(2, 8 - power)){
+					buffer[i] = 1;
 				}
 				power += 1;
 
@@ -43,38 +56,29 @@ char* encode(char* input){
 
 
 	//divide into 512 bit chunks
-	
-	char ** chunks = malloc( len(buffer));
-	int chunk_index = 0;
-	
-	for(int i = 0; i < len(buffer); i ++){
-		if(i % 64 == 0 && i != 0) chunk_index += 1;
-		chunks[chunk_index][i % 64] = buffer[i];
+	int chunks = (len(input)/512) + 1;
+
+	//each chunk has 32 bit words(now 80, used to be 16)
+	char ** words = malloc(chunks * 80 * 32);
+	for(int i = 0; i < chunks; i ++){
+		//j is one of the 80 words
+		for(int j = 0; j < 80; j ++){
+			//k is one of the 32 bits for each word at j
+			for(int k = 0; k < 32; k ++){
+				words[i][(j * 32) + k] = buffer[(i * 512) + (j * 32) + k];
+				if(j >= 16){
+						
+
+				} 
+				
+
+			}
+
+		}		
 
 	}
-	
-	//divide into 32 bit chunks
-	char *** words = malloc(30000);
-	chunk_index = 0;
-	int word_index = 0;
-	for(int i = 0; i < len(buffer); i ++){
-		if(i % 8 == 0) word_index += 1;
-		if(word_index % 16 == 0 && word_index != 0) chunk_index += 1;
-		words[chunk_index][word_index][i % 8] = buffer[i];
-
-	}
-
-		
-	for(int i = 0; i < chunk_index; i ++){
-		for(int j = 16; j < 80; j ++){
-			words[i][j] = words[i][j - 16] ^ words[i][j - 14] ^ words[i][j - 8] ^ words[i][j - 3] << 1;
-			
-		}
-
-	}
-
-
-	
 
 
 }
+
+
