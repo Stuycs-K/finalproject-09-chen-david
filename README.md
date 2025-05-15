@@ -15,5 +15,5 @@ How does the user install/compile/run the program. (CHANGE THIS!!!!!)
 How does the user interact with this program? (CHANGE THIS!!!!!)
 
 ### Resources/ References:
-
-list here(CHANGE THIS!!!!!)
+https://www.metamorphosite.com/one-way-hash-encryption-sha1-data-software
+https://brilliant.org/wiki/secure-hashing-algorithms/
