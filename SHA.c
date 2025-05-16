@@ -67,8 +67,11 @@ char* encode(char* input){
 			for(int k = 0; k < 32; k ++){
 				words[i][(j * 32) + k] = buffer[(i * 512) + (j * 32) + k];
 				if(j >= 16){
-						
-
+					int minus_three = words[i][ ((j - 3)*32) + k];
+					int minus_eight = words[i][ ((j - 8)*32) + k];
+					int minus_fourteen = words[i][ ((j - 14)*32) + k];
+					int minus_sixteen = words[i][ ((j - 16)*32) + k];
+					words[i][(j * 32) + k] = ((minus_three&minus_eight)&(minus_fourteen&minus_sixteen)) << 1;
 				} 
 				
 
