@@ -67,24 +67,28 @@ char* encode(char* input){
 		
 	}
 
-
+	
 	//divide into 512 bit chunks
 	int chunks = (strlen(input)/512) + 1;
-
+	printf("chunks: %d \n", chunks);
 	//each chunk has 32 bit words(now 80, used to be 16)
 	char ** words = malloc(chunks * 80 * 32);
+	
 	for(int i = 0; i < chunks; i ++){
 		//j is one of the 80 words
 		for(int j = 0; j < 80; j ++){
 			//k is one of the 32 bits for each word at j
 			for(int k = 0; k < 32; k ++){
+				printf("OK \n");
 				words[i][(j * 32) + k] = buffer[(i * 512) + (j * 32) + k];
 				if(j >= 16){
+					
 					int minus_three = words[i][ ((j - 3)*32) + k];
 					int minus_eight = words[i][ ((j - 8)*32) + k];
 					int minus_fourteen = words[i][ ((j - 14)*32) + k];
 					int minus_sixteen = words[i][ ((j - 16)*32) + k];
 					words[i][(j * 32) + k] = ((minus_three&minus_eight)&(minus_fourteen&minus_sixteen)) << 1;
+					printf("%d \n", words[i][(j*32) + k]);
 				} 
 				
 
