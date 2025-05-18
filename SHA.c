@@ -61,7 +61,7 @@ char* encode(char* input, int exclude_newline){
 			if(i < ((((strlen(input) - exclude_newline) * 8 / 512) + 1) * 512)  - 64) buffer[i] = 0;
 			else{
 				buffer[i] = 0;
-				if(((unsigned int) ((strlen(input) - exclude_newline)&(unsigned int)pow(2, 64 - power))) == (unsigned int)pow(2, 64 - power)){
+				if(((unsigned long) ((strlen(input) - exclude_newline)&(unsigned long)pow(2, 64 - power))) == (unsigned long)pow(2, 64 - power)){
 					buffer[i] = 1;
 				}
 				power += 1;
