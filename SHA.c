@@ -17,44 +17,51 @@ int main(int argc, char* argv[]){
 		string_index += 1;
 
 	}
-	printf("%s \n", string);
+	string[string_index] = 0;
+	printf("STRING: %s \n", string);
 	encode(string);
 
 }
 
 
 char* encode(char* input){
-	char* buffer = malloc(  ((strlen(input) * 8 / 512) + 1) * 512);
+	int* buffer = malloc(  ((strlen(input) * 8 / 512) + 1) * 512);
 	char* H0 = "67452301";
 	char* H1 = "EFCDAB89";
 	char* H2 = "98BADCFE";
 	char* H3 = "10325476";
 	char* H4 = "C3D2E1F0";
 	int power = 0;
-
+	
 	//initialization
 	int increment_i = 8;
-	for(int i = 0; i < strlen(buffer); i += increment_i){
+	for(int i = 0; i < ((strlen(input)*8/512) + 1) * 512; i += increment_i){
 		if(i < strlen(input) * 8){
-			for(int j = 0; j < 8; j++){
+			for(int j = 0; j < 9; j++){
 				//insert each bit
 				
 				buffer[i + j] = 0;
-				if(input[i]%(int)pow(2, 8 - j) == (int)pow(2, 8-j)){
+				if(((unsigned int)input[i/8]&(unsigned int)pow(2, 8 - j)) == (unsigned int)pow(2, 8-j)){
+					
 					buffer[i + j] = 1;	
 				}
+				
+		
 			}
+
+			
+			if(i == strlen(input) * 7) increment_i = 1;
 		}
-		else if(i == strlen(input)){
+		else if(i == strlen(input) * 8){
 			 buffer[i] = 1;
 			 increment_i = 1;
 		}
 		else{
 			increment_i = 1;
-			if(i < strlen(buffer) - 64) buffer[i] = 0;
+			if(i < (((strlen(input) * 8 / 512) + 1) * 512)  - 64) buffer[i] = 0;
 			else{
 				buffer[i] = 0;
-				if( (strlen(input)&(int)pow(2, 8 - power)) == (int)pow(2, 8 - power)){
+				if(((unsigned int) (strlen(input)&(unsigned int)pow(2, 64 - power))) == (unsigned int)pow(2, 64 - power)){
 					buffer[i] = 1;
 				}
 				power += 1;
@@ -66,6 +73,10 @@ char* encode(char* input){
 
 		
 	}
+
+	
+ 
+
 
 	
 	//divide into 512 bit chunks
