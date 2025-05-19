@@ -5,7 +5,7 @@
 #include "SHA.h"
 int main(int argc, char* argv[]){
 	
-	char* string = malloc(10000);
+	char* string = (char*) malloc(10000);
 	int string_index = 0;
 	for(int i = 1; i < argc; i ++){
 		for(int j = 0; j < strlen(argv[i]); j++){
@@ -15,6 +15,7 @@ int main(int argc, char* argv[]){
 		}
 		string[string_index] = ' ';
 		string_index += 1;
+		printf("STRING INDEX: %d \n", string_index);
 
 	}
 	string[string_index] = 0;
@@ -25,7 +26,8 @@ int main(int argc, char* argv[]){
 
 
 char* encode(char* input, int exclude_newline){
-	int* buffer = malloc(  (((strlen(input) - exclude_newline) * 8 / 512) + 1) * 512);
+	int* buffer = (int*)malloc(  ((((strlen(input) - exclude_newline) * 8 / 512) + 1) * 512)+1);
+	printf("%d \n",   ((((strlen(input) - exclude_newline) * 8 / 512) + 1) * 512)+512);
 	char* H0 = "67452301";
 	char* H1 = "EFCDAB89";
 	char* H2 = "98BADCFE";
@@ -64,31 +66,33 @@ char* encode(char* input, int exclude_newline){
 				if(((unsigned long) (((strlen(input) - exclude_newline) * 8)&(unsigned long)pow(2, 64 - power))) == (unsigned long)pow(2, 64 - power)){
 					buffer[i] = 1;
 				}
-				printf("POWER: %d", power);
+				
 				power += 1;
 
 			}
 
 		}
-		
+		printf("I: %d \n", i);
 
 		
 	}
 
 	
- 
+ 	int bits = 0;
 	for(int i = 0; i < (((strlen(input) - exclude_newline)* 8 / 512) + 1) * 512; i ++){
 		if(i >= ((((strlen(input) - exclude_newline) * 8 / 512) + 1) * 512)  - 64) printf("SIZE: ");
 		printf("%d \n", buffer[i]);
+		bits ++;
 	}
-
+	printf("%d \n", bits);
 	
 	//divide into 512 bit chunks
 	int chunks = (strlen(input)/512) + 1;
 	printf("chunks: %d \n", chunks);
+	printf("CHECKPOINT \n");
 	//each chunk has 32 bit words(now 80, used to be 16)
-	char ** words = malloc(chunks * 80 * 32);
-	
+	char** words = (char**) malloc(chunks * 2560);
+	printf("Checkpoint \n");
 	for(int i = 0; i < chunks; i ++){
 		//j is one of the 80 words
 		for(int j = 0; j < 80; j ++){
@@ -102,7 +106,7 @@ char* encode(char* input, int exclude_newline){
 					int minus_eight = words[i][ ((j - 8)*32) + k];
 					int minus_fourteen = words[i][ ((j - 14)*32) + k];
 					int minus_sixteen = words[i][ ((j - 16)*32) + k];
-					words[i][(j * 32) + k] = ((minus_three&minus_eight)&(minus_fourteen&minus_sixteen)) << 1;
+					words[i][(j * 32) + k] = (((minus_three&minus_eight)&minus_fourteen)&minus_sixteen) << 1;
 					printf("%d \n", words[i][(j*32) + k]);
 				} 
 				
