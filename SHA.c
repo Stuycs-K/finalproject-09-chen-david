@@ -92,28 +92,58 @@ char* encode(char* input, int exclude_newline){
 	printf("chunks: %d \n", chunks);
 	printf("CHECKPOINT \n");
 	//each chunk has 32 bit words(now 80, used to be 16)
-	char** words = (char**) malloc(chunks * 2560);
+	char*** words = (char***) malloc(chunks * 80 * 4 * sizeof(char));
+	//each chunk has a list of 80 words
+
+
+
+
 	printf("Checkpoint \n");
 	for(int i = 0; i < chunks; i ++){
+
+
+		//each word is 4 characters
+
+
+
 		//j is one of the 80 words
+		char** chunk = (char**)malloc(sizeof(char) * 80 * 4); 
+		words[i] = chunk;
 		for(int j = 0; j < 80; j ++){
 			//k is one of the 32 bits for each word at j
+
+
+			char* minus_three;
+			char* minus_eight;
+			char* minus_fourteen;
+			char* minus_sixteen;
+
 			for(int k = 0; k < 32; k ++){
-				printf("OK \n");
-				words[i][(j * 32) + k] = buffer[(i * 512) + (j * 32) + k];
+				
+				
+				if(j < 16) words[i][(j * 32) + k] = (long)buffer[(i * 512) + (j * 32) + k];
 				if(j >= 16){
-					
-					int minus_three = words[i][ ((j - 3)*32) + k];
-					int minus_eight = words[i][ ((j - 8)*32) + k];
-					int minus_fourteen = words[i][ ((j - 14)*32) + k];
-					int minus_sixteen = words[i][ ((j - 16)*32) + k];
-					words[i][(j * 32) + k] = (((minus_three&minus_eight)&minus_fourteen)&minus_sixteen) << 1;
-					printf("%d \n", words[i][(j*32) + k]);
+					//left shift doesn't work with one int
+
+					//set each of the four previous words
+					minus_three += 
+					minus_eight +=
+					minus_fourteen +=
+					minus_sixteen += 
 				} 
 				
 
 			}
 
+
+			if(j >= 16){
+				//later loop and xor the previous words
+				char* val;
+				//char* val = (((minus_three&minus_eight)&minus_fourteen)&minus_sixteen) << 1;
+                                words[i][(j*32) + k] = val;
+                                printf("%d \n", words[i][(j*32) + k]);
+
+			}
 		}		
 
 	}
