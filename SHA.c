@@ -26,7 +26,7 @@ int main(int argc, char* argv[]){
 
 
 char* encode(char* input, int exclude_newline){
-	int* buffer = (int*)malloc(  ((((strlen(input) - exclude_newline) * 8 / 512) + 1) * 512)+1);
+	int* buffer = (int*)malloc(sizeof(int) * (((((strlen(input) - exclude_newline) * 8 / 512) + 1) * 512)+1));
 	printf("%d \n",   ((((strlen(input) - exclude_newline) * 8 / 512) + 1) * 512)+512);
 	char* H0 = "67452301";
 	char* H1 = "EFCDAB89";
@@ -47,6 +47,7 @@ char* encode(char* input, int exclude_newline){
 					
 					buffer[i + j] = 1;	
 				}
+				
 				
 		
 			}
