@@ -15,5 +15,6 @@ How does the user install/compile/run the program. (CHANGE THIS!!!!!)
 How does the user interact with this program? (CHANGE THIS!!!!!)
 
 ### Resources/ References:
+https://stackoverflow.com/questions/1379952/why-is-xor-used-in-cryptography
 https://www.metamorphosite.com/one-way-hash-encryption-sha1-data-software
 https://brilliant.org/wiki/secure-hashing-algorithms/
