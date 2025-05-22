@@ -92,7 +92,7 @@ char* encode(char* input, int exclude_newline){
 	printf("chunks: %d \n", chunks);
 	printf("CHECKPOINT \n");
 	//each chunk has 32 bit words(now 80, used to be 16)
-	char*** words = (char***) malloc(chunks * 80 * 4 * sizeof(char));
+	char*** words = (char**) malloc(chunks * 80 * 4 * sizeof(char));
 	//each chunk has a list of 80 words
 
 
@@ -122,7 +122,7 @@ char* encode(char* input, int exclude_newline){
 			for(int k = 0; k < 32; k ++){
 				if(j < 16){
 
-					words[i][j]  
+					words[i][j][k] += pow(2, (8 - (k % 8)) * buffer[(i * 512) + (j * 32) + k]); 
 
 
 				}
@@ -130,10 +130,10 @@ char* encode(char* input, int exclude_newline){
 					//left shift doesn't work with one int
 
 					//set each of the four previous words
-					minus_three += pow(2, (8 - (k % 8)) * buffer[(i * 512) + ((j - 3) * 32) + k];
-					minus_eight += pow(2, (8 - (k % 8)) * buffer[(i * 512) + ((j - 8) * 32) + k];
-					minus_fourteen += pow(2, (8 - (k % 8)) * buffer[(i * 512) + ((j - 14) * 32) + k];
-					minus_sixteen += pow(2, (8 - (k % 8)) * buffer[(i * 512) + ((j - 16) * 32) + k];
+					minus_three[k] += pow(2, (8 - (k % 8)) * buffer[(i * 512) + ((j - 3) * 32) + k]);
+					minus_eight[k] += pow(2, (8 - (k % 8)) * buffer[(i * 512) + ((j - 8) * 32) + k]);
+					minus_fourteen[k] += pow(2, (8 - (k % 8)) * buffer[(i * 512) + ((j - 14) * 32) + k]);
+					minus_sixteen[k] += pow(2, (8 - (k % 8)) * buffer[(i * 512) + ((j - 16) * 32) + k]);
 				} 
 				
 
@@ -142,10 +142,10 @@ char* encode(char* input, int exclude_newline){
 
 			if(j >= 16){
 				//later loop and xor the previous words
-				char* val;
-				//char* val = (((minus_three&minus_eight)&minus_fourteen)&minus_sixteen) << 1;
+				for(int w = 0; w < 
+				char* val = (((minus_three&minus_eight)&minus_fourteen)&minus_sixteen) << 1;
                                 words[i][j] = val;
-                                printf("%d \n", words[i][j]);
+                                printf("%s \n", words[i][j]);
 
 			}
 		}		
