@@ -124,7 +124,7 @@ char* encode(char* input, int exclude_newline){
 			for(int k = 0; k < 32; k ++){
 				if(j < 16){
 			
-					next_word[k % 8] += (int)pow(2, (8 - (k % 8)) * buffer[(i * 512) + (j * 32) + (k % 8)]); 
+					next_word[(int)(k/8)] += (int)pow(2, (8 - (k % 8)) * buffer[(i * 512) + (j * 32) + (k % 8)]); 
 				
 
 				}
@@ -132,10 +132,10 @@ char* encode(char* input, int exclude_newline){
 					//left shift doesn't work with one int
 
 					//set each of the four previous words
-					minus_three[k % 8] += (int)pow(2, (8 - (k % 8)) * buffer[(i * 512) + ((j - 3) * 32) + (k % 8)]);
-					minus_eight[k % 8] += (int)pow(2, (8 - (k % 8)) * buffer[(i * 512) + ((j - 8) * 32) + (k % 8)]);
-					minus_fourteen[k % 8] += (int)pow(2, (8 - (k % 8)) * buffer[(i * 512) + ((j - 14) * 32) + (k % 8)]);
-					minus_sixteen[k % 8] += (int)pow(2, (8 - (k % 8)) * buffer[(i * 512) + ((j - 16) * 32) + (k % 8)]);
+					minus_three[(int)(k/8)] += (int)pow(2, (8 - (k % 8)) * buffer[(i * 512) + ((j - 3) * 32) + (k % 8)]);
+					minus_eight[(int)(k/8)] += (int)pow(2, (8 - (k % 8)) * buffer[(i * 512) + ((j - 8) * 32) + (k % 8)]);
+					minus_fourteen[(int)(k/8)] += (int)pow(2, (8 - (k % 8)) * buffer[(i * 512) + ((j - 14) * 32) + (k % 8)]);
+					minus_sixteen[(int)(k/8)] += (int)pow(2, (8 - (k % 8)) * buffer[(i * 512) + ((j - 16) * 32) + (k % 8)]);
 				} 
 				
 
@@ -151,7 +151,7 @@ char* encode(char* input, int exclude_newline){
 				}
 				
                                 next_word =  val;
-                                printf("%s \n", words[i][j]);
+                                
 
 			}
 		}		
@@ -161,7 +161,7 @@ char* encode(char* input, int exclude_newline){
 
 
 
-
+	printf("STARTING LOOP \n");
 	//check if everything is running correctly
 	for(int i = 0; i < 80; i += 1){
 		for(int j = 0; j < 4; j ++){
