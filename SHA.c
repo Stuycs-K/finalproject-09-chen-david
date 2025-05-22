@@ -117,19 +117,23 @@ char* encode(char* input, int exclude_newline){
 			char* minus_eight;
 			char* minus_fourteen;
 			char* minus_sixteen;
-
+			//increment every 8 bits
+			
 			for(int k = 0; k < 32; k ++){
-				
-				
-				if(j < 16) words[i][(j * 32) + k] = (long)buffer[(i * 512) + (j * 32) + k];
+				if(j < 16){
+
+					words[i][j]  
+
+
+				}
 				if(j >= 16){
 					//left shift doesn't work with one int
 
 					//set each of the four previous words
-					minus_three += 
-					minus_eight +=
-					minus_fourteen +=
-					minus_sixteen += 
+					minus_three += pow(2, (8 - (k % 8)) * buffer[(i * 512) + ((j - 3) * 32) + k];
+					minus_eight += pow(2, (8 - (k % 8)) * buffer[(i * 512) + ((j - 8) * 32) + k];
+					minus_fourteen += pow(2, (8 - (k % 8)) * buffer[(i * 512) + ((j - 14) * 32) + k];
+					minus_sixteen += pow(2, (8 - (k % 8)) * buffer[(i * 512) + ((j - 16) * 32) + k];
 				} 
 				
 
@@ -140,8 +144,8 @@ char* encode(char* input, int exclude_newline){
 				//later loop and xor the previous words
 				char* val;
 				//char* val = (((minus_three&minus_eight)&minus_fourteen)&minus_sixteen) << 1;
-                                words[i][(j*32) + k] = val;
-                                printf("%d \n", words[i][(j*32) + k]);
+                                words[i][j] = val;
+                                printf("%d \n", words[i][j]);
 
 			}
 		}		
