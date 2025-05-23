@@ -147,11 +147,13 @@ char* encode(char* input, int exclude_newline){
 				//later loop and xor the previous words
 				
 				for(int w = 0; w < 4; w ++){
-					next_word[w] = (((minus_three[w]^minus_eight[w])^minus_fourteen[w])^minus_sixteen[w]) << 1;
+					//error is with the left shift 
+					//left shifting every character, should be left shifting the entire string once
+					next_word[w] = (((minus_three[w]^minus_eight[w])^minus_fourteen[w])^minus_sixteen[w]);
 
 				}
 				
-                                
+                                left_shift_string(next_word[w]);
                                 
 
 			}
@@ -173,5 +175,29 @@ char* encode(char* input, int exclude_newline){
 
 
 }
+
+
+
+
+
+void left_shift_string(char* str){
+	char* new_str = malloc(4);
+	
+	//convert to bits
+	int* str_bits = malloc(32);
+	for(int i = 0; i < 4; i++){
+		for(int j = 0; j < 8; j++){
+			str_bits[(i * 8) + j] = (str[i]&(int)pow(2, 7 - j));
+
+		}
+	}
+
+	int first_bit = 
+	for(int i = 1; i < 32; i ++
+
+
+}
+
+
 
 
