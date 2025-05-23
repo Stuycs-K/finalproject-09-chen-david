@@ -145,13 +145,13 @@ char* encode(char* input, int exclude_newline){
 
 			if(j >= 16){
 				//later loop and xor the previous words
-				unsigned char* val = malloc(4);
+				
 				for(int w = 0; w < 4; w ++){
-					val[w] = (((minus_three[w]^minus_eight[w])^minus_fourteen[w])^minus_sixteen[w]) << 1;
+					next_word[w] = (((minus_three[w]^minus_eight[w])^minus_fourteen[w])^minus_sixteen[w]) << 1;
 
 				}
 				
-                                next_word =  val;
+                                
                                 
 
 			}
