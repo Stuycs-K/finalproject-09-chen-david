@@ -227,7 +227,7 @@ unsigned char* left_shift_string(unsigned char* str){
 		if(str_bits[i] == 1) new_str[(int)((i - 1)/8)] += (int)pow(2, 7 - ((i - 1) % 8));
  
 	}
-	if(first_bit == 1)new_str[3] += 2;
+	if(first_bit == 1)new_str[3] += 1;
 	printf("PRINTING: \n");
 	for(int i = 0; i < 4; i ++){
 		printf("CHAR_VAL: %d \n", new_str[i]);
