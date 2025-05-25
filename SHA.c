@@ -28,11 +28,40 @@ int main(int argc, char* argv[]){
 char* encode(char* input, int exclude_newline){
 	int* buffer = (int*)calloc((((((strlen(input) - exclude_newline) * 8 / 512) + 1) * 512)), sizeof(int));
 	
-	char* H0 = "67452301";
-	char* H1 = "EFCDAB89";
-	char* H2 = "98BADCFE";
-	char* H3 = "10325476";
-	char* H4 = "C3D2E1F0";
+	unsigned char* H0 = calloc(4, sizeof(unsigned char*));
+	unsigned char* H1 = calloc(4, sizeof(unsigned char*));
+	unsigned char* H2 = calloc(4, sizeof(unsigned char*));
+	unsigned char* H3 = calloc(4, sizeof(unsigned char*));
+	unsigned char* H4 = calloc(4, sizeof(unsigned char*));
+
+	H0[0] = 103;
+	H0[1] = 69;
+	H0[2] = 35;
+	H0[3] = 1;
+
+	H1[0] = 239;
+	H1[1] = 205;
+	H1[2] = 171;
+	H1[3] = 137;
+
+	H2[0] = 152;
+	H2[1] = 186;
+	H2[2] = 220;
+	H2[3] = 254;
+
+	H3[0] = 16;
+	H3[1] = 50;
+	H3[2] = 84;
+	H3[3] = 118;
+
+	H4[0] = 195;
+	H4[1] = 210;
+	H4[2] = 225;
+	H4[3] = 240;
+
+		
+
+
 	int power = 1;
 	
 	//initialization
@@ -89,7 +118,7 @@ char* encode(char* input, int exclude_newline){
 	//divide into 512 bit chunks
 	int chunks = (strlen(input)/512) + 1;
 	printf("chunks: %d \n", chunks);
-	printf("CHECKPOINT \n");
+	
 	//each chunk has 32 bit words(now 80, used to be 16)
 	unsigned char*** words = (unsigned char***) malloc(chunks * sizeof(unsigned char**));
 	//each chunk has a list of 80 words
@@ -97,8 +126,6 @@ char* encode(char* input, int exclude_newline){
 	int printed = 1;
 
 
-
-	printf("Checkpoint \n");
 	for(int i = 0; i < chunks; i ++){
 
 
@@ -139,43 +166,29 @@ char* encode(char* input, int exclude_newline){
 
 
 
-				if(printed == 1){
-				for(int ww = 0; ww < 16; ww ++){
-					for(int ii = 0; ii < 4; ii++)
-					printf("WORD: %d     VALUE: %d \n", ww, words[0][ww][ii]);
-
-				}
-				printed = 0;
-				}
+				
 
 
 				//later loop and xor the previous words
-				printf("RIGHT VALUE: %d \n", words[0][15][3]);
+			
 				memcpy(minus_three, words[i][j - 3], 4);
 				memcpy(minus_eight, words[i][j - 8], 4);
 				memcpy(minus_fourteen, words[i][j - 14], 4);
 				memcpy(minus_sixteen, words[i][j - 16], 4);
 
-				if(j == 18){
-
-					printf("EIGHTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEN \n");
-					printf("WORD VALUE: %d \n", words[0][15][3]);
-					printf("I: %d \n", i);
-					printf("J - 3: %d \n", j - 3);
-					printf("STRNCPY VALUE: %d \n",  minus_three[3]);
-				}
+				
 
 
 				for(int w = 0; w < 4; w ++){
 					//error is with the left shift 
 					//left shifting every character, should be left shifting the entire string once
 					next_word[w] = (((minus_three[w]^minus_eight[w])^minus_fourteen[w])^minus_sixteen[w]);
-					printf("INDEX: %d      CHARACTER %d    MINUS THREE: %d \n", j - 3, w, minus_three[w]);
+				
 
 				}
 				
                                 memcpy(next_word, left_shift_string(next_word), 4);
-				printf("OK \n");
+				
                                 
 
 			}
@@ -186,7 +199,7 @@ char* encode(char* input, int exclude_newline){
 
 
 
-	printf("STARTING LOOP \n");
+	printf("STARTING LOOP FOR 80 WORDS \n");
 	//check if everything is running correctly
 	for(int i = 0; i < 80; i += 1){
 		for(int j = 0; j < 4; j ++){
@@ -194,6 +207,212 @@ char* encode(char* input, int exclude_newline){
 			printf("word %d: %d \n", i, words[0][i][j]);
 		}
 	}
+
+
+
+	//init A B C D E
+	unsigned char* A = calloc(4, sizeof(unsigned char*));
+	unsigned char* B = calloc(4, sizeof(unsigned char*));
+	unsigned char* C = calloc(4, sizeof(unsigned char*));
+	unsigned char* D = calloc(4, sizeof(unsigned char*));
+	unsigned char* E = calloc(4, sizeof(unsigned char*));
+
+	memcpy(A, H0, 4);
+	memcpy(B, H1, 4);
+	memcpy(C, H2, 4);
+	memcpy(D, H3, 4);
+	memcpy(E, H4, 4);
+
+
+
+
+
+
+	printf("STARTING LOOP FOR NEW VALUES \n");
+	for(int i = 0; i < chunks; i ++){
+
+		
+				
+
+		for(int j = 0; j < 80; j++){
+			//function 1: 0-19
+			//function 2: 20-39
+			//function 3: 40-59
+			//function 4: 60-79
+			unsigned char* f = calloc(4, sizeof(unsigned char*));
+			unsigned char* k = calloc(4, sizeof(unsigned char*));
+
+		
+			//each function will set 'f' and 'k' to a different value
+
+			if(j >= 0 && j < 20){
+				//function 1
+				
+				for(int k = 0; k < 4; k++){
+					unsigned char temp1 = B[k]&C[k];
+					unsigned char temp2 = (~B[k])&D[k];
+					f[k] = temp1|temp2;
+				}
+				k[0] = 90;
+				k[1] = 130;
+				k[2] = 121;
+				k[3] = 153;
+				
+
+			}
+			else if(j >= 20 && j < 40){
+				//function 2
+				for(int k = 0; k < 4; k ++){
+					unsigned char temp1 = B[k]^C[k];
+					f[k] = temp1^D[k];
+				}
+				k[0] = 110;
+				k[1] = 217;
+				k[2] = 235;
+				k[3] = 161;
+
+			}
+			else if(j >= 40 && j < 59){
+				//function 3
+				for(int k = 0; k < 4; k ++){
+
+					unsigned char temp1 = B[k]&C[k];
+					unsigned char temp2 = B[k]&D[k];
+					unsigned char temp3 = C[k]&D[k];
+					f[k] = (temp1|temp2)|temp3;
+				}
+				k[0] = 143;
+				k[1] = 27;
+				k[2] = 188;
+				k[3] = 220;
+			}
+			else{
+				//function 4
+				for(int k = 0; k < 4; k ++){
+					unsigned char temp1 = B[k]^C[k];
+					f[k] = temp1^D[k];
+				}
+
+				k[0] = 202;
+				k[1] = 98;
+				k[2] = 193;
+				k[3] = 214;
+			}
+			
+
+			//longer_temp will be truncated to temp
+			unsigned int temp_int = 0;
+			unsigned char* A_5 = calloc(4, sizeof(unsigned char*));
+			memcpy(A_5, left_shift_string(A), 4);
+			memcpy(A_5, left_shift_string(A_5), 4);
+			memcpy(A_5, left_shift_string(A_5), 4);
+			memcpy(A_5, left_shift_string(A_5), 4);
+			memcpy(A_5, left_shift_string(A_5), 4);
+
+
+
+
+			//A_5 + f + E + k + current word
+			for(int ww = 0; ww < 32; ww ++){
+				if((A_5[(int)(ww/8)]&(int)pow(2, 7 - (ww%8))) == (int)pow(2, 7 - (ww%8))) temp_int += (int)pow(2, 31 - ww);
+				if((f[(int)(ww/8)]&(int)pow(2, 7 - (ww%8))) == (int)pow(2, 7 - (ww%8))) temp_int += (int)pow(2, 31 - ww);
+				if((E[(int)(ww/8)]&(int)pow(2, 7 - (ww%8))) == (int)pow(2, 7 - (ww%8))) temp_int += (int)pow(2, 31 - ww);
+				if((k[(int)(ww/8)]&(int)pow(2, 7 - (ww%8))) == (int)pow(2, 7 - (ww%8))) temp_int += (int)pow(2, 31 - ww);
+				if(j == 59){
+
+
+
+
+				}
+				if((words[i][j][(int)(ww/8)]&(int)pow(2, 7 - (ww%8))) == (int)pow(2, 7 - (ww%8))) temp_int += (int)pow(2, 31 - ww);
+
+				
+			}
+
+
+
+			//reset var
+			memcpy(E, D, 4);
+			memcpy(D, C, 4);
+			memcpy(C, B, 4);
+			for(int k = 0; k < 30; k ++){
+				memcpy(C, left_shift_string(C), 4);
+			}
+			memcpy(B, A, 4);
+			A = calloc(4, sizeof(unsigned char*));
+			for(int k = 0; k < 32; k ++){
+				if((temp_int&(int)pow(2, 31 - k)) == (int)pow(2, 31 - k)) A[(int)(k/8)] += (int)pow(2, 7 - (k%8));
+
+			}
+			printf("WORD: %d            TEMP: %u \n", j, temp_int);
+			printf("WORD: %d            A: %d \n", j, A[0]);
+			printf("WORD: %d            A: %d \n", j, A[1]);
+			printf("WORD: %d            A: %d \n", j, A[2]);
+			printf("WORD: %d            A: %d \n", j, A[3]);
+		
+			printf("WORD: %d            B: %d \n", j, B[0]);
+			printf("WORD: %d            B: %d \n", j, B[1]);
+			printf("WORD: %d            B: %d \n", j, B[2]);
+			printf("WORD: %d            B: %d \n", j, B[3]);
+
+			printf("WORD: %d            C: %d \n", j, C[0]);
+			printf("WORD: %d            C: %d \n", j, C[1]);
+			printf("WORD: %d            C: %d \n", j, C[2]);
+			printf("WORD: %d            C: %d \n", j, C[3]);
+
+			printf("WORD: %d            D: %d \n", j, D[0]);
+			printf("WORD: %d            D: %d \n", j, D[1]);
+			printf("WORD: %d            D: %d \n", j, D[2]);
+			printf("WORD: %d            D: %d \n", j, D[3]);
+
+			printf("WORD: %d            E: %d \n", j, E[0]);
+			printf("WORD: %d            E: %d \n", j, E[1]);
+			printf("WORD: %d            E: %d \n", j, E[2]);
+			printf("WORD: %d            E: %d \n", j, E[3]);
+
+			printf("__________________________________________________________________\n");
+			
+			
+
+		}
+
+	}
+
+
+
+	unsigned int H0_int = 0;
+	unsigned int H1_int = 0;
+	unsigned int H2_int = 0;
+	unsigned int H3_int = 0;
+	unsigned int H4_int = 0;
+
+	//set initial values 
+	for(int i = 0; i < 32; i++){
+		if((A[(int)(i/8)]&(int)pow(2, 7 - (i%8))) == (int)pow(2, 7 - (i%8))) H0_int += (int)pow(2, 31 - i);
+		if((H0[(int)(i/8)]&(int)pow(2, 7 - (i%8))) == (int)pow(2, 7 - (i%8))) H0_int += (int)pow(2, 31 - i);
+
+		if((B[(int)(i/8)]&(int)pow(2, 7 - (i%8))) == (int)pow(2, 7 - (i%8))) H1_int += (int)pow(2, 31 - i);
+		if((H1[(int)(i/8)]&(int)pow(2, 7 - (i%8))) == (int)pow(2, 7 - (i%8))) H1_int += (int)pow(2, 31 - i);
+
+		if((C[(int)(i/8)]&(int)pow(2, 7 - (i%8))) == (int)pow(2, 7 - (i%8))) H2_int += (int)pow(2, 31 - i);
+		if((H2[(int)(i/8)]&(int)pow(2, 7 - (i%8))) == (int)pow(2, 7 - (i%8))) H2_int += (int)pow(2, 31 - i);
+
+		if((D[(int)(i/8)]&(int)pow(2, 7 - (i%8))) == (int)pow(2, 7 - (i%8))) H3_int += (int)pow(2, 31 - i);
+		if((H3[(int)(i/8)]&(int)pow(2, 7 - (i%8))) == (int)pow(2, 7 - (i%8))) H3_int += (int)pow(2, 31 - i);
+
+		if((E[(int)(i/8)]&(int)pow(2, 7 - (i%8))) == (int)pow(2, 7 - (i%8))) H4_int += (int)pow(2, 31 - i);
+		if((H4[(int)(i/8)]&(int)pow(2, 7 - (i%8))) == (int)pow(2, 7 - (i%8))) H4_int += (int)pow(2, 31 - i);
+	}
+	
+
+
+
+
+	printf("A: %u \n", H0_int);
+
+
+
+
 
 
 }
@@ -207,14 +426,14 @@ unsigned char* left_shift_string(unsigned char* str){
 	
 	//convert to bits
 	int* str_bits = calloc(32, sizeof(int));
-	printf("STARTING ROTATION! \n");
+	
 	for(int i = 0; i < 4; i++){
 		for(int j = 0; j < 8; j++){
 		
 			if((str[i]&(int)pow(2, 7 - j)) == (int)pow(2, 7 - j)) str_bits[(i * 8) + j] = 1;
 			else str_bits[(i * 8) + j] = 0;
 			
-			printf("bit val: %d \n", str_bits[(i * 8) + j]); 
+			
 		}
 	
 	}
@@ -228,15 +447,40 @@ unsigned char* left_shift_string(unsigned char* str){
  
 	}
 	if(first_bit == 1)new_str[3] += 1;
-	printf("PRINTING: \n");
-	for(int i = 0; i < 4; i ++){
-		printf("CHAR_VAL: %d \n", new_str[i]);
-	}
+	//printf("PRINTING: \n");
+	//for(int i = 0; i < 4; i ++){
+		//printf("CHAR_VAL: %d \n", new_str[i]);
+	//}
 
-	printf("FINISHED ROTATION! \n");
+	//printf("FINISHED ROTATION! \n");
 	return new_str;	 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
