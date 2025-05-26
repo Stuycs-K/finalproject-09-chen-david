@@ -7,12 +7,11 @@ David Chen
        
 ### Project Description:
 
-This project aims to explain how the SHA1 algorithm works and elaborate on its vulnerabilities(specifically the birthday attack) and why it isn't considered secure anymore.
+This project aims to explain how the SHA1 algorithm works and create a comprehensive video discussing the specific steps on how the encoder works. 
   
 ### Instructions:
 
-How does the user install/compile/run the program. (CHANGE THIS!!!!!)
-How does the user interact with this program? (CHANGE THIS!!!!!)
+To run the program, call "make encode ARGS=[input string]", where 'input string' is the string you want to encode into the SHA1 format.
 
 ### Resources/ References:
 https://stackoverflow.com/questions/1379952/why-is-xor-used-in-cryptography
