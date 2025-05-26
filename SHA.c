@@ -272,7 +272,7 @@ char* encode(char* input, int exclude_newline){
 				k[3] = 161;
 
 			}
-			else if(j >= 40 && j < 59){
+			else if(j >= 40 && j < 60){
 				//function 3
 				for(int k = 0; k < 4; k ++){
 
@@ -318,15 +318,16 @@ char* encode(char* input, int exclude_newline){
 				if((f[(int)(ww/8)]&(int)pow(2, 7 - (ww%8))) == (int)pow(2, 7 - (ww%8))) temp_int += (int)pow(2, 31 - ww);
 				if((E[(int)(ww/8)]&(int)pow(2, 7 - (ww%8))) == (int)pow(2, 7 - (ww%8))) temp_int += (int)pow(2, 31 - ww);
 				if((k[(int)(ww/8)]&(int)pow(2, 7 - (ww%8))) == (int)pow(2, 7 - (ww%8))) temp_int += (int)pow(2, 31 - ww);
-				if(j == 59){
-
-
-
-
-				}
 				if((words[i][j][(int)(ww/8)]&(int)pow(2, 7 - (ww%8))) == (int)pow(2, 7 - (ww%8))) temp_int += (int)pow(2, 31 - ww);
 
 				
+			}
+			for(int ww = 0; ww < 4; ww ++){
+				printf("A_5: %u \n", A_5[ww]);
+				printf("f: %u \n", f[ww]);
+				printf("E: %u \n", E[ww]);
+				printf("k: %u \n", k[ww]);
+				printf("word: %u \n", words[i][j][(int)(ww)]);
 			}
 
 
