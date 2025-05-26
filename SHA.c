@@ -410,10 +410,20 @@ char* encode(char* input, int exclude_newline){
 
 
 	printf("A: %u \n", H0_int);
+	printf("B: %u \n", H1_int);
+	printf("C: %u \n", H2_int);
+	printf("D: %u \n", H3_int);
+	printf("E: %u \n", H4_int);
 
+	//convert to hexadecimal
 
+	printf("A in Hex: %s \n", decimal_to_hex(H0_int));
+	printf("B in Hex: %s \n", decimal_to_hex(H1_int));
+	printf("C in Hex: %s \n", decimal_to_hex(H2_int));
+	printf("D in Hex: %s \n", decimal_to_hex(H3_int));
+	printf("E in Hex: %s \n", decimal_to_hex(H4_int));
 
-
+	printf("Encoded String: %s%s%s%s%s \n", decimal_to_hex(H0_int), decimal_to_hex(H1_int), decimal_to_hex(H2_int), decimal_to_hex(H3_int), decimal_to_hex(H4_int));
 
 
 }
@@ -463,6 +473,62 @@ unsigned char* left_shift_string(unsigned char* str){
 
 
 
+unsigned char* decimal_to_hex(int decimal){
+	
+	unsigned char* hexadecimal = calloc(9, sizeof(unsigned char));
+	int index = 0;
+	char HEX[16] = "0123456789abcdef"; 
+	int firstindex = 0;
+	int secondindex = 0;
+	int hexadecimal_index = 0;
+	while(index < 4){
+		unsigned char character = 0;
+		for(int i = 0; i < 8; i ++){
+			if( (decimal&(int)pow(2, 31 - (index * 8) - i)) == (int)pow(2, 31 - (index * 8) - i)) character += (int)pow(2, 7 - i);
+		}
+
+		
+
+		firstindex = 0; 
+		secondindex = 0;
+		//printf("%c : %d \n", character, character);
+
+		int temp = 0;
+		for(int i = 0; i < character; i ++){
+			if(i % 16 == 0 && i != 0){
+				
+				secondindex += 1;
+				firstindex = 0;
+				temp = 0;
+			}
+
+			temp += 1;
+			firstindex += 1;
+		}
+
+		if(temp % 16 == 0 && temp != 0){
+				secondindex += 1;
+				firstindex = 0;
+		}
+		char first = HEX[firstindex];
+		char second = HEX[secondindex];
+		//printf("%c%c ", second, first);
+
+		hexadecimal[hexadecimal_index] = second;
+		hexadecimal_index += 1;
+		hexadecimal[hexadecimal_index] = first;
+		hexadecimal_index += 1;
+		index += 1;
+	
+	}
+	hexadecimal[8] = 0;
+	return hexadecimal;
+	
+	
+
+
+
+}
 
 
 
