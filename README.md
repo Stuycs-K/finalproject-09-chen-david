@@ -7,7 +7,7 @@ David Chen
        
 ### Project Description:
 
-This project aims to explain how the SHA1 algorithm works and create a comprehensive video discussing the specific steps on how the encoder works. 
+This project aims to explain how the SHA1 algorithm works and create a comprehensive video discussing the specific steps on how the encoder works, along with an encoder created by the C language, listing all the steps.
   
 ### Instructions:
 
