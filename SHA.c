@@ -15,11 +15,11 @@ int main(int argc, char* argv[]){
 		}
 		string[string_index] = ' ';
 		string_index += 1;
-		printf("STRING INDEX: %d \n", string_index);
+		
 
 	}
 	string[string_index] = 0;
-	printf("STRING: %s \n", string);
+	printf("Encoding String: %s \n", string);
 	encode(string, 1);
 
 }
@@ -108,22 +108,23 @@ char* encode(char* input, int exclude_newline){
 	}
 	
  	int bits = 0;
+	printf("Printing Buffer: \n");
 	for(int i = 0; i < (((strlen(input) - exclude_newline)* 8 / 512) + 1) * 512; i ++){
 		
-		printf("WORD: %d    I: %d    VALUE: %d \n", (int)(i/32), i, buffer[i]);
+		printf("%d", buffer[i]);
 		bits ++;
 	}
-	
+	printf("\n");
 	
 	//divide into 512 bit chunks
 	int chunks = (strlen(input)/512) + 1;
-	printf("chunks: %d \n", chunks);
+	
 	
 	//each chunk has 32 bit words(now 80, used to be 16)
 	unsigned char*** words = (unsigned char***) malloc(chunks * sizeof(unsigned char**));
 	//each chunk has a list of 80 words
 
-	int printed = 1;
+	
 
 
 	for(int i = 0; i < chunks; i ++){
@@ -199,7 +200,7 @@ char* encode(char* input, int exclude_newline){
 
 
 
-	printf("STARTING LOOP FOR 80 WORDS \n");
+	printf("Printing the 80 word list \n");
 	//check if everything is running correctly
 	for(int i = 0; i < 80; i += 1){
 		for(int j = 0; j < 4; j ++){
@@ -228,7 +229,7 @@ char* encode(char* input, int exclude_newline){
 
 
 
-	printf("STARTING LOOP FOR NEW VALUES \n");
+	printf("Changing the variables A, B, C, D, E with the 80 word list \n");
 	for(int i = 0; i < chunks; i ++){
 
 		
