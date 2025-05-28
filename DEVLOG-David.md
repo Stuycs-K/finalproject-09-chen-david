@@ -28,13 +28,6 @@ This document must be updated daily every time you finish a work session.
 
 ### 2025-05-26 - Fixed issue with the calculation at word 59(I did 'j < 59' instead of 'j < 60'). Finished decimal to hex function. Finished encoder. 
 
+### 2025-05-27 - Finished encoder, created PRESENTATION.md
 
-
-
-
-
-
-
-### 2025-05-23 - 
-
-### 
+### 2025-05-28 - Continued working on PRESENTATION.md
