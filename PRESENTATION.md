@@ -101,10 +101,40 @@ We will set `k` to `10001111000110111011110011011100` in binary.
 
 After getting the values for variables `f` and `k` for each word, we will create an integer called `temp`. 
 
+We will store the result of
 
+`(A circular shift 5) + f + E + k + current word`
 
-We are using an integer because if we want to truncate the binary from the left of the result, we can just store the bits in an 32 bit unsigned integer because the integer will automatically truncate the extra bits to the left until the result is 32 bits long. 
+in temp, where + is a bitwise addition(convert the binary to integer, add the result, and convert back into binary. 
 
+Since our encoded output is 32 bits long, our resulting binary must be 32 bits long as well. This means that we will have to truncate the result(temp) at the end. 
 
+Temp is an integer. We are using an integer because if we want to truncate the binary from the left of the result, we can just store the bits in an 32 bit unsigned integer because the integer will automatically truncate the extra bits to the left until the result is 32 bits long(at least in C).
 
-**Converting The Results To Hexadecimal** 
+After getting the value for temp, we will modify A, B, C, D, and E, where 
+
+```
+E = D
+D = C
+C = B circular shift 30
+B = A
+A = temp
+```
+
+**Final Steps And Converting The Results To Hexadecimal** 
+
+After looping through the list of 80 words and eventually getting our results for variables A, B, C, D, and E, we will set our initial variables as:
+```
+h0 += A
+h1 += B
+h2 += C
+h3 += D
+h4 += E
+```
+where += represents a bitwise addition to the current value. 
+
+Now that we have the results for h0, h1, h2, h3, and h4, we will convert them to hexadecimal, 
+
+and join them together. 
+
+The encoded string is: `da2e412299ae8ed1c1ee6057a5c7aa879e59b576`

@@ -117,7 +117,7 @@ char* encode(char* input, int exclude_newline){
 	printf("\n");
 	
 	//divide into 512 bit chunks
-	int chunks = (strlen(input)/512) + 1;
+	int chunks = ((strlen(input) - exclude_newline) * 8 / 512) + 1;
 	
 	
 	//each chunk has 32 bit words(now 80, used to be 16)
@@ -423,7 +423,7 @@ char* encode(char* input, int exclude_newline){
 	printf("C in Hex: %s \n", decimal_to_hex(H2_int));
 	printf("D in Hex: %s \n", decimal_to_hex(H3_int));
 	printf("E in Hex: %s \n", decimal_to_hex(H4_int));
-
+	printf("Chunks: %d \n", chunks);
 	printf("Encoded String: %s%s%s%s%s \n", decimal_to_hex(H0_int), decimal_to_hex(H1_int), decimal_to_hex(H2_int), decimal_to_hex(H3_int), decimal_to_hex(H4_int));
 
 
