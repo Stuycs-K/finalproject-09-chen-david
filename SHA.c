@@ -427,42 +427,22 @@ char* encode(char* input, int exclude_newline){
 		
 
 		
-		for(int ii = 0; ii < 32; ii++){
-		if((A[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8))){
-			
-			H0[(int)(ii/8)] += (int)pow(2, 7 - (ii%8)); 
-		}
-		
-		if((B[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8))){
-			
-			H1[(int)(ii/8)] += (int)pow(2, 7 - (ii%8)); 
-		}
-		
+		       H0 = calloc(4, sizeof(unsigned char*));
+         H1 = calloc(4, sizeof(unsigned char*));
+         H2 = calloc(4, sizeof(unsigned char*));
+         H3 = calloc(4, sizeof(unsigned char*));
+         H4 = calloc(4, sizeof(unsigned char*));
+		for(int ii = 0; ii < 32; ii ++){
 
-		if((C[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8))){
-			
-			H2[(int)(ii/8)] += (int)pow(2, 7 - (ii%8)); 
-		}
-		
+			if( (H0_int & (int)pow(2, 31 - ii)) == (int)pow(2, 31 - ii)) H0[(int)(ii/8)] += (int)pow(2, 7 - (ii%8));
+			 if( (H1_int & (int)pow(2, 31 - ii)) == (int)pow(2, 31 - ii)) H1[(int)(ii/8)] += (int)pow(2, 7 - (ii%8));
+ if( (H2_int & (int)pow(2, 31 - ii)) == (int)pow(2, 31 - ii)) H2[(int)(ii/8)] += (int)pow(2, 7 - (ii%8));
+ if( (H3_int & (int)pow(2, 31 - ii)) == (int)pow(2, 31 - ii)) H3[(int)(ii/8)] += (int)pow(2, 7 - (ii%8));
+ if( (H4_int & (int)pow(2, 31 - ii)) == (int)pow(2, 31 - ii)) H4[(int)(ii/8)] += (int)pow(2, 7 - (ii%8));
 
-		if((D[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8))){
-			
-			H3[(int)(ii/8)] += (int)pow(2, 7 - (ii%8)); 
-		}
-		
-
-		if((E[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8))){
-			
-			H4[(int)(ii/8)] += (int)pow(2, 7 - (ii%8)); 
-		}
-		
-		}
 			
 
-		
-		
-		
-
+		}
 	}
 	
 
@@ -598,7 +578,6 @@ unsigned char* decimal_to_hex(int decimal){
 
 
 
-unsigned char* bitwise_addition(
 
 
 
