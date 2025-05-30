@@ -16,15 +16,15 @@ This document must be updated daily every time you finish a work session.
 
 ### 2025-05-20 - Started the creation of the 80 word list. Updated README.md file. 
 
-### 2025-05-21 - Continued the creation of the 80 words list, found another source with a more comprehensive guide on creating the encoder.
+### 2025-05-21 - Continued the creation of the 80 words list, found another source with a more comprehensive guide on creating the encoder(clarified a few questions I have regarding what I should do to create the list of 80 words).
 
-### 2025-05-22 - Fixed a few bugs, replaced the AND bitwise operator to the XOR bitwise operator, debugged issue with the creation of the 80 words list.
+### 2025-05-22 - Fixed a few bugs, replaced the AND bitwise operator with the XOR bitwise operator, debugged issue with the creation of the 80 words list.
 
 ### 2025-05-23 - Fixed the issue regarding the creation of the 80 words list, debugged an issue with the bytes in the word list. 
 
 ### 2025-05-24 - Fixed the bytes in the word list(circular shift function added a one instead of a two at the end), finished creating the 80 words list.
 
-### 2025-05-25 - Finished the creation of the four functions for the 80 words list, debugged issue with the calculation at word 59.
+### 2025-05-25 - Finished the creation of the four functions for the 80 words list, started debugging an issue with the calculation at word 59.
 
 ### 2025-05-26 - Fixed issue with the calculation at word 59(I did 'j < 59' instead of 'j < 60'). Finished decimal to hex function. Finished encoder. 
 
@@ -32,6 +32,10 @@ This document must be updated daily every time you finish a work session.
 
 ### 2025-05-28 - Continued working on PRESENTATION.md
 
-### 2025-05-29 - Continued working on PRESENTATION.md
+### 2025-05-29 - Continued working on PRESENTATION.md, found a bug(inputs longer than 512 bits(64 characters) are not correctly encoded.
 
-### 2025-05-30 - Continued working on PRESENTATION.md, found a bug 
+### 2025-05-30 - Finished PRESENTATION.md. Fixed the previous bug(I did not accumulate the results of h0, h1, h2, h3, and h4 for each chunk). Finished encoder. Starting video. 
+
+### 2025-05-31 - 
+
+

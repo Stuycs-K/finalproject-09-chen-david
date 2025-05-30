@@ -1,6 +1,6 @@
-**How The SHA1 Encoder Works**
+#**How The SHA1 Encoder Works**
 
-**Initialization**
+##**Initialization**
 
 First, we have to set up 5 variables named `h0`, `h1`, `h2`, `h3`, `h4`, where 
 `h0 = 01100111010001010010001100000001`
@@ -28,7 +28,7 @@ Our array now looks like this:
 
 
 
-**Creating The List of 80 Words**
+##**Creating The List of 80 Words**
 
 After initializing the buffer of 512 bits, we will now use that buffer to create a list of 80 words.
 
@@ -45,7 +45,7 @@ For example, if we have the word:
 After performing the circular shift function, our word looks like this:
 `10101000 11001010 11100110 11101000`
 
-**Creation of Variables A, B, C, D, And E**
+##**Creation of Variables A, B, C, D, And E**
   
 After getting 80 words by performing the XOR and circular shift operations, we will now use the resulting list of 80 words to modify 5 variables, where:
 `A = h0`
@@ -60,7 +60,7 @@ There will be 4 functions that we will be using with the wordlist to modify thes
 
 For each function, we will get a different value for the variables `f` and `k`, where we will then use the values of `f` and `k`, along with the current word itself(which will be passed into the function), to modify A, B, C, D, and E.
 
-**Function 1**
+###**Function 1**
 
 We will pass in  words 0 to 19 to the first function to get our values for `f` and `k`.
 
@@ -69,7 +69,7 @@ We will set `f` equal to `(B & C) | (~B & D)`, where & is the bitwise AND operat
 We will set `k` equal to `01011010100000100111100110011001` in binary. 
 
 
-**Function 2**
+###**Function 2**
 
 We will pass in words 20 to 39 to the second function to get our values for `f` and `k`.
 
@@ -78,7 +78,7 @@ We will set `f` equal to `((B ^ C) ^ D)`, where ^ is the bitwise XOR operator.
 We will set `k` equal to `01101110110110011110101110100001` in binary.
 
 
-**Function 3**
+###**Function 3**
 
 We will pass in words 40 to 59 to the third function to get our values for `f` and `k`.
 
@@ -87,7 +87,7 @@ We will set `f` equal to `(B & C) | (B & D) | (C & D)`.
 We will set `k` equal to `10001111000110111011110011011100` in binary.
 
 
-**Function 4**
+###**Function 4**
 
 We will pass in words 60 to 79 to the fourth function to get our values for `f` and `k`.
 
@@ -97,7 +97,7 @@ We will set `k` to `10001111000110111011110011011100` in binary.
 
 
 
-**Modifying Variables A, B, C, D, And E**
+##**Modifying Variables A, B, C, D, And E**
 
 After getting the values for variables `f` and `k` for each word, we will create an integer called `temp`. 
 
@@ -121,7 +121,7 @@ B = A
 A = temp
 ```
 
-**Final Steps And Converting The Results To Hexadecimal** 
+#**Final Steps And Converting The Results To Hexadecimal** 
 
 After looping through the list of 80 words and eventually getting our results for variables A, B, C, D, and E, we will set our initial variables as:
 ```
@@ -133,8 +133,8 @@ h4 += E
 ```
 where += represents a bitwise addition to the current value. 
 
-Now that we have the results for h0, h1, h2, h3, and h4, we will convert them to hexadecimal, 
+We will add the results of A, B, C, D, and E after the loop once for each chunk, and eventually get our final values for `h0`, `h1`, `h2`, `h3`, and `h4`.
 
-and join them together. 
+Now that we have the results for `h0`, `h1`, `h2`, `h3`, and `h4`, we will convert them to hexadecimal and join them together. 
 
 The encoded string is: `da2e412299ae8ed1c1ee6057a5c7aa879e59b576`
