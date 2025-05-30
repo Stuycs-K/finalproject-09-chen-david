@@ -33,6 +33,11 @@ char* encode(char* input, int exclude_newline){
 	unsigned char* H2 = calloc(4, sizeof(unsigned char*));
 	unsigned char* H3 = calloc(4, sizeof(unsigned char*));
 	unsigned char* H4 = calloc(4, sizeof(unsigned char*));
+	unsigned int H0_int = 0;
+	unsigned int H1_int = 0;
+	unsigned int H2_int = 0;
+	unsigned int H3_int = 0;
+	unsigned int H4_int = 0;
 
 	H0[0] = 103;
 	H0[1] = 69;
@@ -200,18 +205,29 @@ char* encode(char* input, int exclude_newline){
 
 
 
-	printf("Printing the 80 word list \n");
+	printf("Printing the 80 word lists \n");
 	//check if everything is running correctly
+	for(int w = 0; w < chunks; w ++){
+		printf("CHUNK %d \n", w);
 	for(int i = 0; i < 80; i += 1){
 		for(int j = 0; j < 4; j ++){
 
 			printf("word %d: %d \n", i, words[0][i][j]);
 		}
 	}
+	}
 
 
 
-	//init A B C D E
+	
+
+
+
+
+	printf("Changing the variables A, B, C, D, E with the 80 word list \n");
+	for(int i = 0; i < chunks; i ++){
+
+		//init A B C D E
 	unsigned char* A = calloc(4, sizeof(unsigned char*));
 	unsigned char* B = calloc(4, sizeof(unsigned char*));
 	unsigned char* C = calloc(4, sizeof(unsigned char*));
@@ -225,14 +241,6 @@ char* encode(char* input, int exclude_newline){
 	memcpy(E, H4, 4);
 
 
-
-
-
-
-	printf("Changing the variables A, B, C, D, E with the 80 word list \n");
-	for(int i = 0; i < chunks; i ++){
-
-		
 				
 
 		for(int j = 0; j < 80; j++){
@@ -324,6 +332,7 @@ char* encode(char* input, int exclude_newline){
 				
 			}
 			for(int ww = 0; ww < 4; ww ++){
+				
 				printf("A_5: %u \n", A_5[ww]);
 				printf("f: %u \n", f[ww]);
 				printf("E: %u \n", E[ww]);
@@ -346,6 +355,7 @@ char* encode(char* input, int exclude_newline){
 				if((temp_int&(int)pow(2, 31 - k)) == (int)pow(2, 31 - k)) A[(int)(k/8)] += (int)pow(2, 7 - (k%8));
 
 			}
+			
 			printf("WORD: %d            TEMP: %u \n", j, temp_int);
 			printf("WORD: %d            A: %d \n", j, A[0]);
 			printf("WORD: %d            A: %d \n", j, A[1]);
@@ -374,37 +384,82 @@ char* encode(char* input, int exclude_newline){
 
 			printf("__________________________________________________________________\n");
 			
+			//set initial values 
+		for(int ii = 0; ii < 32; ii++){
+		if((A[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8))){
+			H0_int += (int)pow(2, 31 - ii);
+			 
+		}
+		if((H0[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8)) && i == 0) H0_int += (int)pow(2, 31 - ii);
+
+		if((B[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8))){
+			H1_int += (int)pow(2, 31 - ii);
 			
+		}
+		if((H1[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8))  && i == 0) H1_int += (int)pow(2, 31 - ii);
+
+		if((C[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8))){
+			H2_int += (int)pow(2, 31 - ii);
+			 
+		}
+		if((H2[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8)) && i == 0) H2_int += (int)pow(2, 31 - ii);
+
+		if((D[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8))){
+			H3_int += (int)pow(2, 31 - ii);
+		
+		}
+		if((H3[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8)) && i == 0) H3_int += (int)pow(2, 31 - ii);
+
+		if((E[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8))){
+			H4_int += (int)pow(2, 31 - ii);
+			
+		}
+		if((H4[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8)) && i == 0) H4_int += (int)pow(2, 31 - ii);
+		}
 
 		}
 
-	}
+		
+		for(int ii = 0; ii < 32; ii++){
+		if((A[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8))){
+			
+			H0[(int)(ii/8)] += (int)pow(2, 7 - (ii%8)); 
+		}
+		
+		if((B[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8))){
+			
+			H1[(int)(ii/8)] += (int)pow(2, 7 - (ii%8)); 
+		}
+		
+
+		if((C[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8))){
+			
+			H2[(int)(ii/8)] += (int)pow(2, 7 - (ii%8)); 
+		}
+		
+
+		if((D[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8))){
+			
+			H3[(int)(ii/8)] += (int)pow(2, 7 - (ii%8)); 
+		}
+		
+
+		if((E[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8))){
+			
+			H4[(int)(ii/8)] += (int)pow(2, 7 - (ii%8)); 
+		}
+		
+		}
+			
+
+		}
+		
+		
 
 
+	
 
-	unsigned int H0_int = 0;
-	unsigned int H1_int = 0;
-	unsigned int H2_int = 0;
-	unsigned int H3_int = 0;
-	unsigned int H4_int = 0;
-
-	//set initial values 
-	for(int i = 0; i < 32; i++){
-		if((A[(int)(i/8)]&(int)pow(2, 7 - (i%8))) == (int)pow(2, 7 - (i%8))) H0_int += (int)pow(2, 31 - i);
-		if((H0[(int)(i/8)]&(int)pow(2, 7 - (i%8))) == (int)pow(2, 7 - (i%8))) H0_int += (int)pow(2, 31 - i);
-
-		if((B[(int)(i/8)]&(int)pow(2, 7 - (i%8))) == (int)pow(2, 7 - (i%8))) H1_int += (int)pow(2, 31 - i);
-		if((H1[(int)(i/8)]&(int)pow(2, 7 - (i%8))) == (int)pow(2, 7 - (i%8))) H1_int += (int)pow(2, 31 - i);
-
-		if((C[(int)(i/8)]&(int)pow(2, 7 - (i%8))) == (int)pow(2, 7 - (i%8))) H2_int += (int)pow(2, 31 - i);
-		if((H2[(int)(i/8)]&(int)pow(2, 7 - (i%8))) == (int)pow(2, 7 - (i%8))) H2_int += (int)pow(2, 31 - i);
-
-		if((D[(int)(i/8)]&(int)pow(2, 7 - (i%8))) == (int)pow(2, 7 - (i%8))) H3_int += (int)pow(2, 31 - i);
-		if((H3[(int)(i/8)]&(int)pow(2, 7 - (i%8))) == (int)pow(2, 7 - (i%8))) H3_int += (int)pow(2, 31 - i);
-
-		if((E[(int)(i/8)]&(int)pow(2, 7 - (i%8))) == (int)pow(2, 7 - (i%8))) H4_int += (int)pow(2, 31 - i);
-		if((H4[(int)(i/8)]&(int)pow(2, 7 - (i%8))) == (int)pow(2, 7 - (i%8))) H4_int += (int)pow(2, 31 - i);
-	}
+	
 	
 
 
