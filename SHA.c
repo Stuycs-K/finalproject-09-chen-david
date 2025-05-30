@@ -385,39 +385,45 @@ char* encode(char* input, int exclude_newline){
 			printf("__________________________________________________________________\n");
 			
 			//set initial values 
+			printf("CHUNK: %d \n", i);
+			}
 		for(int ii = 0; ii < 32; ii++){
+
 		if((A[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8))){
 			H0_int += (int)pow(2, 31 - ii);
 			 
 		}
-		if((H0[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8)) && i == 0) H0_int += (int)pow(2, 31 - ii);
+		if(((H0[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8))) && i == 0) H0_int += (int)pow(2, 31 - ii);
 
 		if((B[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8))){
 			H1_int += (int)pow(2, 31 - ii);
 			
 		}
-		if((H1[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8))  && i == 0) H1_int += (int)pow(2, 31 - ii);
+		if(((H1[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8)))  && i == 0) H1_int += (int)pow(2, 31 - ii);
 
 		if((C[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8))){
 			H2_int += (int)pow(2, 31 - ii);
 			 
 		}
-		if((H2[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8)) && i == 0) H2_int += (int)pow(2, 31 - ii);
+		if(((H2[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8))) && i == 0) H2_int += (int)pow(2, 31 - ii);
 
 		if((D[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8))){
 			H3_int += (int)pow(2, 31 - ii);
 		
 		}
-		if((H3[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8)) && i == 0) H3_int += (int)pow(2, 31 - ii);
+		if(((H3[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8))) && i == 0) H3_int += (int)pow(2, 31 - ii);
 
 		if((E[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8))){
 			H4_int += (int)pow(2, 31 - ii);
 			
 		}
-		if((H4[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8)) && i == 0) H4_int += (int)pow(2, 31 - ii);
-		}
+		if(((H4[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8))) && i == 0) H4_int += (int)pow(2, 31 - ii);
+
+
 
 		}
+
+		
 
 		
 		for(int ii = 0; ii < 32; ii++){
@@ -452,11 +458,11 @@ char* encode(char* input, int exclude_newline){
 		}
 			
 
-		}
+		
 		
 		
 
-
+	}
 	
 
 	
