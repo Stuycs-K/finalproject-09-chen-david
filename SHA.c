@@ -385,8 +385,9 @@ char* encode(char* input, int exclude_newline){
 			printf("__________________________________________________________________\n");
 			
 			//set initial values 
-			printf("CHUNK: %d \n", i);
+			
 			}
+		printf("CHUNK: %d \n", i);
 		for(int ii = 0; ii < 32; ii++){
 
 		if((A[(int)(ii/8)]&(int)pow(2, 7 - (ii%8))) == (int)pow(2, 7 - (ii%8))){
@@ -597,7 +598,7 @@ unsigned char* decimal_to_hex(int decimal){
 
 
 
-
+unsigned char* bitwise_addition(
 
 
 

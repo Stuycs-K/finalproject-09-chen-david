@@ -32,4 +32,6 @@ This document must be updated daily every time you finish a work session.
 
 ### 2025-05-28 - Continued working on PRESENTATION.md
 
-### 2025-05-28 - Continued working on PRESENTATION.md
+### 2025-05-29 - Continued working on PRESENTATION.md
+
+### 2025-05-30 - Continued working on PRESENTATION.md, found a bug 
