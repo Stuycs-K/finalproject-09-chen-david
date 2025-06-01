@@ -17,7 +17,7 @@ After initializing the 5 variables above, we will begin encoding by managing eve
 
 We will have a 512 bit array containing the necessary information to create a list of 80 words, which will then be used to modify our initial 5 variables. The creation of a list of 80 words to modify our variables(and eventually get to our message digest, or encoded output) contributes to the avalanche effect of the encoder, where even a change in one bit leads to a completely different message digest, a key characteristic of a block cipher. 
 
-In the 512 bit array, we will combine the 5 variables(in binary), and then append a 1 to the array.
+In the 512 bit array, we will combine our input(in binary), and then append a 1 to the array.
 (if the result exceeds 512 bits, we store the information in multiple 512 bit arrays until there is enough space to store the input in binary and the length of the input) 
 
 Now, we will append 0s until our array is 448 bits long(or 448 integers long if you are storing the bits in an integer array), where the remaining 64 bits will be the length of the input string in binary. 
