@@ -12,6 +12,7 @@ This project aims to explain how the SHA1 algorithm works and create a comprehen
 ### Instructions:
 
 To run the program, call "make encode ARGS=[input string]", where 'input string' is the string you want to encode into the SHA1 format.
+Link to video: https://drive.google.com/drive/u/2/folders/1cpp2LVjofGFatAZQeQUczfE2fYflgQ9b 
 
 ### Resources/ References:
 https://stackoverflow.com/questions/1379952/why-is-xor-used-in-cryptography
