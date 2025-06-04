@@ -163,11 +163,10 @@ char* encode(char* input, int exclude_newline){
 
 				}
 			}	
-			
-			//SHOULD NOT BE USING BUFFER HERE, BUFFER ONLY EXTENDS TO 16 WORDS, USE THE WORDS ARRAY
+	
 			if(j >= 16){
 
-				//print out words until 16
+			
 
 
 
@@ -186,8 +185,7 @@ char* encode(char* input, int exclude_newline){
 
 
 				for(int w = 0; w < 4; w ++){
-					//error is with the left shift 
-					//left shifting every character, should be left shifting the entire string once
+					
 					next_word[w] = (((minus_three[w]^minus_eight[w])^minus_fourteen[w])^minus_sixteen[w]);
 				
 
@@ -252,7 +250,7 @@ char* encode(char* input, int exclude_newline){
 			unsigned char* k = calloc(4, sizeof(unsigned char*));
 
 		
-			//each function will set 'f' and 'k' to a different value
+			
 
 			if(j >= 0 && j < 20){
 				//function 1
@@ -309,7 +307,7 @@ char* encode(char* input, int exclude_newline){
 			}
 			
 
-			//longer_temp will be truncated to temp
+			
 			unsigned int temp_int = 0;
 			unsigned char* A_5 = calloc(4, sizeof(unsigned char*));
 			memcpy(A_5, left_shift_string(A), 4);
@@ -501,12 +499,7 @@ unsigned char* left_shift_string(unsigned char* str){
  
 	}
 	if(first_bit == 1)new_str[3] += 1;
-	//printf("PRINTING: \n");
-	//for(int i = 0; i < 4; i ++){
-		//printf("CHAR_VAL: %d \n", new_str[i]);
-	//}
-
-	//printf("FINISHED ROTATION! \n");
+	
 	return new_str;	 
 
 }
